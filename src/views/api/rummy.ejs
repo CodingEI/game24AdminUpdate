@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+    <title>Casino</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f8ff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .app {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        nav {
+            background-color: #f95959;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .page_title {
+            margin: 0;
+            color: #fff;
+            font-size: 24px;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+        .jili_games_card {
+            flex: 1 0 30%;
+            max-width: 30%;
+            height: 100px;
+            margin: 10px 1%;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 15px; /* Curve the corners of the card */
+            overflow: hidden; /* Ensure the image fits within the curved corners */
+            display: flex; /* Use flex to center the image */
+            align-items: center;
+            justify-content: center;
+        }
+        .jili_games_card img {
+            width: 100%; /* Ensure the image covers the card */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 15px; /* Match the card's corner radius */
+            display: block; /* Remove space below the image */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <nav>
+            <h4 class="page_title">Fishing Games</h4>
+        </nav>
+        <main id="games-container">
+            <!-- Game cards will be injected here -->
+        </main>
+    </div>
+    <script>
+        const userInfoTypes = {
+            phoneNumber: "phone_user",
+            username: "name_user",
+            userId: "id_user",
+        };
+        let userData = null;
+
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get('/api/webapi/GetUserInfo');
+                userData = response?.data?.data;
+                if (!userData) throw Error("User data not found!");
+                displayGames();
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        const displayGames = () => {
+            const mobile = encodeURIComponent(userData[userInfoTypes.phoneNumber]);
+
+            const agentId = '<%= process.env.AGENT_ID %>';
+            const agentKey = '<%= process.env.AGENT_KEY %>';
+            const referrerUrl = '<%= process.env.CALLBACK_URL %>';
+
+            const baseUrl = "https://admin.diamondclub.co.in/api/playJili";
+            const imageBaseUrl = "https://game24.bet/jili_games";
+            const gameIds = [
+            94];
+
+            const container = document.getElementById('games-container');
+            container.innerHTML = '';
+
+            gameIds.forEach(gameId => {
+                const paddedGameId = gameId < 10 ? `0${gameId}` : gameId;
+                const imagePath = `${imageBaseUrl}/GAMEID_${paddedGameId}.png`;
+                const gameUrl = `${baseUrl}?game_id=${gameId}&player_id=${mobile}&api_key=48f29eb2-ed91-44d6-af15-ae090bf62946`;
+                const cardHtml = `
+                    <a href="${gameUrl}" class="jili_games_card">
+                        <img src="${imagePath}" alt="Game ${gameId}" onerror="this.src='https://via.placeholder.com/100x100'; this.style.background='none';">
+                    </a>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        };
+
+        fetchUser();
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>JDB Slot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f7f8ff;
+        }
+        header {
+            background-color: #f95959; /* Slightly darker color for contrast */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 15px;
+            justify-content: center;
+        }
+        .game-item {
+            width: 120.6px;
+            height: 162.99px;
+            box-sizing: border-box;
+            text-align: center;
+            max-width: 120.6px; /* Ensures the item does not exceed the specified width */
+            border-radius: 15px; /* Curve the corners of the container */
+            overflow: hidden; /* Ensures image does not overflow the container */
+        }
+        .game-link {
+            display: block;
+            text-decoration: none;
+            color: transparent; /* Hide text color as it should not be visible */
+            width: 100%;
+            height: 100%;
+        }
+        .game-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px; /* Curve the corners of the image */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        JDB Slot
+    </header>
+    <div class="game-container" id="game-container">
+        <!-- Game items will be dynamically inserted here -->
+    </div>
+    <script>
+        const userInfoTypes = {
+            phoneNumber: "phone_user",
+        };
+
+        const mTypes = {
+            slots: {
+                gType0: [
+                    '14092', '14091', '14090', '14089', '14088', '14087', '14086', '14085', '14084', '14083', 
+                    '14082', '14081', '14080', '14079', '14077', '14075', '14070', '14068', '14067', '14065', 
+                    '14064', '14063', '14061', '14060', '14059', '14058', '14055', '14054', '14053', '14052', 
+                    '14051', '14050', '14048', '14047', '14046', '14045', '14044', '14043', '14042', '14041', 
+                    '14040', '14039', '14038', '14036', '14035', '14034', '14033', '14030', '14029', '14027', 
+                    '14025', '14022', '14021', '14018', '14016', '14012', '14010', '14008', '14007', '14006', 
+                    '14005', '14003', '8001', '15012', '15010', '15005', '15002', '15001', '8051', '8050', '8049', '8048', '8047', '8046', '8044', '8035', '8028', '8023', '8022', '8021', '8020', '8019', '8018', '8017', '8015', '8014', '8007', '8006', '8005', '8004', '8003', '8002'
+                ],
+                gType32: [
+                    '32059', '32058', '32057', '32056', '32055', '32054', '32053', '32051', '32050',
+                    '32049', '32048', '32047', '32045', '32043', '32042', '32041', '32040',
+                    '32039', '32038', '32037', '32036', '32034', '32032', '32031', '32030',
+                    '32029', '32028', '32027', '32026', '32024', '32023', '32022', '32021', '32020',
+                    '32019', '32018', '32017', '32016'
+                ]
+            }
+        };
+
+        const imageMapping = {
+            '32059': 'https://luckywins777.com/jd/32059.png',
+            '32058': 'https://luckywins777.com/jd/32058.png',
+            '32057': 'https://luckywins777.com/jd/32057.png',
+            '32056': 'https://luckywins777.com/jd/32056.png',
+            '32055': 'https://luckywins777.com/jd/32055.png',
+            '32054': 'https://luckywins777.com/jd/32054.png',
+            '32053': 'https://luckywins777.com/jd/32053.png',
+            '32052': 'https://luckywins777.com/jd/32052.png',
+            '32051': 'https://luckywins777.com/jd/32052.png',
+            '32050': 'https://luckywins777.com/jd/32000.png',
+            '32049': 'https://luckywins777.com/jd/32050.png',
+            '32048': 'https://luckywins777.com/jd/32049.png',
+            '32047': 'https://luckywins777.com/jd/32048.png',
+           // '32046': 'https://luckywins777.com/jd/32047.png',
+            '32045': 'https://luckywins777.com/jd/32047.png',
+          //  '32044': 'https://luckywins777.com/jd/32045.png',
+            '32043': 'https://luckywins777.com/jd/32046.png',
+            '32042': 'https://luckywins777.com/jd/32045.png',
+            '32041': 'https://luckywins777.com/jd/32044.png',
+            '32040': 'https://luckywins777.com/jd/32043.png',
+            '32039': 'https://luckywins777.com/jd/32042.png',
+            '32038': 'https://luckywins777.com/jd/32041.png',
+            '32037': 'https://luckywins777.com/jd/32040.png',
+            '32036': 'https://luckywins777.com/jd/32039.png',
+           // '32035': 'https://luckywins777.com/jd/32035.png',
+            '32034': 'https://luckywins777.com/jd/32038.png',
+           // '32033': 'https://luckywins777.com/jd/32037.png',
+            '32032': 'https://luckywins777.com/jd/32037.png',
+            '32031': 'https://luckywins777.com/jd/32036.png',
+            '32030': 'https://luckywins777.com/jd/32035.png',
+            '32029': 'https://luckywins777.com/jd/32034.png',
+            '32028': 'https://luckywins777.com/jd/32033.png',
+            '32027': 'https://luckywins777.com/jd/32032.png',
+            '32026': 'https://luckywins777.com/jd/32030.png',
+           // '32025': 'https://luckywins777.com/jd/32028.png',
+            '32024': 'https://luckywins777.com/jd/32029.png',
+            '32023': 'https://luckywins777.com/jd/32028.png',
+            '32022': 'https://luckywins777.com/jd/32027.png',
+            '32021': 'https://luckywins777.com/jd/32026.png',
+            '32020': 'https://luckywins777.com/jd/32025.png',
+            '32019': 'https://luckywins777.com/jd/32024.png',
+            '32018': 'https://luckywins777.com/jd/32023.png',
+            '32017': 'https://luckywins777.com/jd/32021.png',
+            '32016': 'https://luckywins777.com/jd/32020.png'
+        };
+
+        let phoneNumber = '';
+
+        const fetchUser = async () => {
+            try {
+                const response = await fetch('/api/webapi/GetUserInfo');
+                const data = await response.json();
+                if (!data || !data.data) throw new Error("User data not found!");
+
+                phoneNumber = encodeURIComponent(data.data[userInfoTypes.phoneNumber]);
+
+                displayGames(); // Display games with images
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        const displayGames = () => {
+            const container = document.getElementById('game-container');
+            container.innerHTML = '';
+
+            let gamesToDisplay = [
+                ...mTypes.slots.gType0.map(mType => ({ mType, gType: 0 })),
+                ...mTypes.slots.gType32.map(mType => ({ mType, gType: 32 }))
+            ];
+
+
+
+            gamesToDisplay.forEach(game => {
+           
+            const gameUrl = `https://sxm.in.net/jdb/post?iv=f1ab7cea8106a3e4&key=b4d70df8d5c2857c&uid=${phoneNumber}&serverUrl=https://jdb.game24.bet&parent=sxmapis&gType=${game.gType}&mType=${game.mType}`;
+            
+            
+             //   const gameUrl = `https://fluxapis.live/jdb/post?iv=05bae19880a21dd1&key=3467d9770b6bdd41&uid
+             // =${phoneNumber}&serverUrl=https://api2.dubailottery.club/&parent=digexpert&gType=${game.gType}&mType   
+             // =${game.mType}`;
+
+                // Define image URL based on gType
+                const imageUrl = game.gType === 32
+                    ? imageMapping[game.mType] || 'https://via.placeholder.com/120x163' // Use mapping for gType 32
+                    : `https://fluxapis.live/jdbimages/${game.mType}.png`; // Default path for other game types
+
+                const gameItem = document.createElement('div');
+                gameItem.className = 'game-item';
+
+                const img = new Image();
+                img.src = imageUrl;
+                img.className = 'game-image';
+                img.onerror = () => {
+                    img.src = 'https://via.placeholder.com/120x163'; // Placeholder image in case of an error
+                };
+
+                const gameLink = document.createElement('a');
+                gameLink.href = gameUrl;
+                gameLink.className = 'game-link';
+                gameLink.appendChild(img);
+
+                gameItem.appendChild(gameLink);
+                container.appendChild(gameItem);
+            });
+        };
+
+        fetchUser();
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ticket Detail</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <style>
+      table {
+        table-layout: fixed;
+        width: 100%;
+      }
+
+      td {
+        white-space: nowrap; /* Prevent wrapping */
+        overflow: hidden; /* Hide overflow content */
+        text-overflow: ellipsis; /* Add ellipsis when content overflows */
+        max-width: 200px; /* Set max width for cells */
+      }
+
+      .table-container {
+        overflow-x: auto;
+        max-width: 100%;
+      }
+
+      .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <%- include('nav') %>
+      <div class="content-wrapper">
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>Ticket Detail</h1>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+
+        <!-- <div class="form-group" style="text-align: center">
+          <input
+            type="text"
+            id="search"
+            placeholder="Enter the member you are looking for"
+          />
+        </div> -->
+
+        <!-- Main content -->
+        <section class="content">
+          <!-- Default box -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Detail of Ticket</h3>
+              <div class="card-tools">
+                <button
+                  type="button"
+                  class="btn btn-tool"
+                  data-card-widget="collapse"
+                  title="Collapse"
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-tool"
+                  data-card-widget="remove"
+                  title="Remove"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-4" style="overflow-y: hidden"></div>
+            <div class="px-4 py-4">
+              <h3>Subject</h3>
+              <p><%= ticket.title %></p>
+            </div>
+            <div class="px-4 py-4">
+              <h3>Description</h3>
+              <p><%= ticket.description %></p>
+            </div>
+            <div class="px-4 py-4">
+                 <% JSON.parse(ticket.images).forEach(function(image, index) { %>
+            <img onclick="location.href='/uploads/<%= image %>'" src="/uploads/<%= image %>"  alt="Image <%= index + 1 %>" style="max-width: 200px; max-height: 200px; margin-right: 10px;">
+        <% }) %>
+            </div>
+            <div class="px-4 py-4">
+              <h3>Reply</h3>
+              <textarea name="note" cols="100" rows="20"><%= ticket.note || '' %></textarea>
+            </div>
+             <button id="closeTicket" style="margin: 40px;width: 400px;" type="button" class="btn btn-block btn-success btn-lg">Save and close Ticket</button>
+          </div>
+         
+        </section>
+      </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="/js/admin/admin.js"></script>
+    <script>
+      $("#search").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("tbody tr").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+      });
+    </script>
+    <script>
+      var pageno = 0;
+      var pageto = 30;
+      var page = 1;
+
+     
+        $("#closeTicket").click(function (e) {
+          e.preventDefault();
+          const note = $('textarea[name=note]').val();
+        
+            $.ajax({
+              type: "POST",
+              url: "/api/webapi/admin/closeTicket",
+              data: {
+                id: '<%= ticket.id %>',
+                note
+              },
+              dataType: "json",
+              success: function (response) {
+                alert(response.message);
+                location.href = '/admin/manager/tickets';
+              },
+            });
+       
+        });
+      
+    </script>
+    <script src="/js/admin/tables.js"></script>
+  </body>
+</html>

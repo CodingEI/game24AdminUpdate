@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">
+    <title>JILI Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f8ff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .app {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        nav {
+            background-color: #f95959;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .page_title {
+            margin: 0;
+            color: #fff;
+            font-size: 24px;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+        .jili_games_card {
+            flex: 1 0 30%;
+            max-width: 30%;
+            height: 100px;
+            margin: 10px 1%;
+            overflow: hidden; /* Hide anything outside the bounds */
+            border-radius: 15px; /* Rounded corners for the card */
+            background-color: transparent; /* Ensure no background color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .jili_games_card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the entire card */
+            display: block; /* Remove extra space below image */
+            border-radius: 15px; /* Match the card's corner radius */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <nav>
+            <h4 class="page_title">Table Games</h4>
+        </nav>
+        <main id="games-container">
+            <!-- Game cards will be injected here -->
+        </main>
+    </div>
+    <script>
+        const userInfoTypes = {
+            phoneNumber: "phone_user",
+            username: "name_user",
+            userId: "id_user",
+        };
+        let userData = null;
+
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get('/api/webapi/GetUserInfo');
+                userData = response?.data?.data;
+                if (!userData) throw Error("User data not found!");
+                displayGames();
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        const displayGames = () => {
+            const mobile = encodeURIComponent(userData[userInfoTypes.phoneNumber]);
+
+            const agentId = '<%= process.env.AGENT_ID %>';
+            const agentKey = '<%= process.env.AGENT_KEY %>';
+            const referrerUrl = '<%= process.env.CALLBACK_URL %>';
+
+            const baseUrl = "https://admin.diamondclub.co.in/api/playJili";
+            const imageBaseUrl = "https://game24.bet/jiliimg";
+            const gameIds = [
+                64, 61, 62, 63, 66, 118, 111, 112, 113, 123, 122, 124, 139, 125, 151, 148, 179, 150, 174, 197, 178, 149, 200,
+                173, 177, 182, 216, 204, 217, 195, 114, 297, 389, 224, 229, 232, 233, 235, 236, 254, 241, 242, 261, 407
+            ];
+
+            const container = document.getElementById('games-container');
+            container.innerHTML = '';
+
+            gameIds.forEach(gameId => {
+                const paddedGameId = gameId < 10 ? `0${gameId}` : gameId;
+                const imagePath = `${imageBaseUrl}/GAMEID_${paddedGameId}.png`;
+                const gameUrl = `${baseUrl}?game_id=${gameId}&player_id=${mobile}&api_key=48f29eb2-ed91-44d6-af15-ae090bf62946`;
+                const cardHtml = `
+                    <a href="${gameUrl}" class="jili_games_card">
+                        <img src="${imagePath}" alt="Game ${gameId}" onerror="this.src='https://via.placeholder.com/100x100';">
+                    </a>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        };
+
+        fetchUser();
+    </script>
+</body>
+</html>

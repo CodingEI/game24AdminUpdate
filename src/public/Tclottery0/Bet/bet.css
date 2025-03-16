@@ -1,0 +1,216 @@
+html,
+    body {
+      height: 100%;
+      width: 100%;
+      background-color: #9195a3;
+      padding: 0;
+      margin: 0;
+    }
+
+    .wingo-change-time-img {
+      transition: 1s;
+    }
+
+    #line_canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .block-click {
+      pointer-events: none;
+    }
+    
+    /* The Modal (background) */
+    .modal {
+      display: blocked;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 20001;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+    }
+
+    .text-over-image {
+      position: absolute;
+      /* Position relative to the parent element */
+      top: 35%;
+      /* Center vertically */
+      left: 50%;
+      /* Center horizontally */
+      transform: translate(-50%, -50%);
+      /* Adjust the positioning */
+      color: #fff;
+      /* Text color */
+      font-size: 30px;
+      /* Text size */
+      font-weight: bold;
+      /* Text weight */
+      text-align: center;
+      /* Center text */
+    }
+
+    .text-over-image-l {
+      position: absolute;
+      top: 45%;
+      left: 49%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 11px;
+      font-weight: bold;
+      text-align: center;
+      margin-left: -32px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+      text-align: -webkit-center;
+      position: relative;
+      top: 20%;
+    }
+
+    .modal-content img {
+      width: 382px;
+      /* Use this to ensure the image is full width */
+      height: auto;
+      /* Adjust height automatically */
+      display: block;
+      /* Change display to block to avoid extra space */
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Circle button style */
+    .close-btn {
+      border: 2px solid #fff;
+      /* Black border */
+      border-radius: 50%;
+      /* Circle shape */
+      background-color: transparent;
+      /* Transparent background */
+      width: 30px;
+      /* Width and height should be equal for a circle */
+      height: 30px;
+      /* Width and height should be equal for a circle */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .close-btn:hover {
+      background-color: #ddd;
+      /* Light grey background on hover */
+    }
+
+    /* "X" line style */
+    .close-x {
+      font-size: 35px;
+      /* Large font size for the "X" */
+      font-family: none;
+      line-height: 1;
+      /* Tight line height for the "X" */
+      color: #fff;
+      /* Black color for the "X" */
+      padding: 0;
+      /* No padding */
+      margin: 0;
+      /* No margin */
+    }
+
+    .text-over-image-2 {
+      position: absolute;
+      top: 63%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ff850f;
+      font-size: 25px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .text-over-image-3 {
+      position: absolute;
+      top: 69%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #070706;
+      font-size: 13px;
+      font-weight: none;
+      text-align: center;
+    }
+
+    .btn-boox {
+      border: none;
+      color: white;
+      padding: 5px 6px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      margin: 4px 4px;
+      cursor: pointer;
+      font-family: monospace;
+      border-radius: 5px;
+    }
+
+    .xredviolet {
+      background: linear-gradient(45deg, red 50%, violet 50%);
+    }
+
+    .xgreenviolet {
+      background: linear-gradient(45deg, green 50%, violet 50%);
+    }
+
+    .xred {
+      background-color: red;
+    }
+
+    .xgreen {
+      background-color: green;
+    }
+
+    .xgreenvioletcolor {
+      background-image: -webkit-linear-gradient(top left, #5cba47 50%, #eb43dd 0) !important;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 0.66667rem;
+      font-size: .53333rem;
+      font-weight: 700;
+      font-size: .656rem;
+    }
+
+    .xredvioletcolor {
+      background-image: -webkit-linear-gradient(top left, #d0322d 50%, #eb43dd 0) !important;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 0.66667rem;
+      font-size: .53333rem;
+      font-weight: 700;
+      font-size: .656rem;
+    }

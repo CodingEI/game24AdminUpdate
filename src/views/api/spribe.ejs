@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SPRIBE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f7f8ff; /* Background color applied here */
+        }
+        header {
+            background-color: #f95959; /* Slightly darker color for contrast */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 15px;
+            justify-content: center;
+        }
+        .game-item {
+            width: 120.6px;
+            height: 162.99px;
+            box-sizing: border-box;
+            text-align: center;
+            max-width: 120.6px; /* Ensures the item does not exceed the specified width */
+            border-radius: 15px; /* Curve the corners of the container */
+            overflow: hidden; /* Ensures image does not overflow the container */
+        }
+        .game-link {
+            display: block;
+            text-decoration: none;
+            color: transparent; /* Hide text color as it should not be visible */
+            width: 100%;
+            height: 100%;
+        }
+        .game-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px; /* Curve the corners of the image */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        SPRIBE
+    </header>
+    <div class="game-container" id="game-container">
+        <!-- Game items will be dynamically inserted here -->
+    </div>
+    <script>
+        const userInfoTypes = {
+            phoneNumber: "phone_user",
+        };
+
+        const mTypes = {
+            spribe: {
+                gType22: [
+                  '22009','22001', '22008', '22007', '22006', '22005', '22004', '22003', '22002' 
+                ]
+            }
+        };
+
+        const imageUrls = {
+            '22009': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/TB_Chess/107.png',
+            '22008': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/TB_Chess/104.png',
+            '22007': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/SPRIBE/22007.png',
+            '22006': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/TB_Chess/101.png',
+            '22005': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/SPRIBE/22005.png',
+            '22004': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/TB_Chess/103.png',
+            '22003': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/SPRIBE/22003.png',
+            '22002': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/SPRIBE/22002.png',
+           '22001': 'https://ossimg.tirangaagent.com/Tiranga/gamelogo/SPRIBE/22001.png',
+        };
+
+        let phoneNumber = '';
+
+        const fetchUser = async () => {
+            try {
+                const response = await fetch('/api/webapi/GetUserInfo');
+                const data = await response.json();
+                if (!data || !data.data) throw new Error("User data not found!");
+
+                phoneNumber = encodeURIComponent(data.data[userInfoTypes.phoneNumber]);
+
+                displayGames(); // Display only Spribe games
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        const displayGames = () => {
+            const container = document.getElementById('game-container');
+            container.innerHTML = '';
+
+            const gamesToDisplay = mTypes.spribe.gType22.map(mType => ({ mType, gType: 22 }));
+
+            gamesToDisplay.forEach(game => {
+                const gameUrl = `https://sxm.in.net/jdb/post?iv=f1ab7cea8106a3e4&key=b4d70df8d5c2857c&uid=${phoneNumber}&serverUrl=https://jdb.game24.bet&parent=sxmapis&gType=${game.gType}&mType=${game.mType}`;
+                const imageUrl = imageUrls[game.mType] || 'https://via.placeholder.com/120x163'; // Fallback to placeholder if URL not found
+
+                const gameItem = document.createElement('div');
+                gameItem.className = 'game-item';
+
+                const gameLink = document.createElement('a');
+                gameLink.href = gameUrl;
+                gameLink.className = 'game-link';
+
+                const img = new Image();
+                img.src = imageUrl;
+                img.className = 'game-image';
+                img.onerror = () => {
+                    img.src = 'https://via.placeholder.com/120x163'; // Fallback image if the main image fails to load
+                };
+
+                gameLink.appendChild(img);
+                gameItem.appendChild(gameLink);
+                container.appendChild(gameItem);
+            });
+        };
+
+        fetchUser();
+    </script>
+</body>
+</html>

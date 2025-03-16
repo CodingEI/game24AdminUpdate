@@ -1,0 +1,9 @@
+1. Change `type` column to datatype to varchar(255) in `recharge` table.
+2.alter table admin_ac
+add column bkash_mobile varchar(255),
+add column nagad_mobile varchar(255)
+
+
+ALTER TABLE user_bank
+add column bkash_mobile varchar(255) after chi_nhanh,
+add column nagad_mobile varchar(255) after bkash_mobile;
