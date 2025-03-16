@@ -2925,14 +2925,14 @@ async function handleGameWin(req,res) {
       [0, payload?.game,  payload?.join_bet, payload?.game_type, a, b, c],
     );
 
-    // Updating the table k3 result
+    // Updating the table k3 result with status 2 to those which admin didn't set to win
     await connection.execute(
       `UPDATE result_k3 
       SET status = 2 
       WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet NOT IN (?, ?, ?)`,
       [0, payload?.game, payload?.join_bet, payload?.game_type, a, b, c]
     );
-    
+
     res.status(200).json({ success: true, message: "Game win updated successfully" });
   } catch (err) {
     console.error("Error updating user withdrawal data:", err.message);
