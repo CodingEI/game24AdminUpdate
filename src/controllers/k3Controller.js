@@ -1870,6 +1870,7 @@ async function funHandingDifferent(game, join_bet, game_type) {
 
 
 async function plusMoney(game) {
+  console.log("Hello from plus moneyyyyyyyyyyyyyyyyyyy")
   console.log("game:---------------->", game)
 
   const [order] = await connection.execute(
@@ -2536,7 +2537,8 @@ const k3Controller = {
   handlingK3,
   listOrderOld,
   GetMyEmerdList,
-  funHandingTwoSame
+  funHandingTwoSame,
+  plusMoney
 };
 
 export default k3Controller;

@@ -13,6 +13,7 @@ import e from "express";
 import moment from "moment";
 import path from "path";
 import fs from "fs";
+import k3Controller from '../controllers/k3Controller.js';
 
 let timeNow = Date.now();
 
@@ -2911,22 +2912,29 @@ async function updateUserWithdrawlData(req, res) {
  */
 async function handleGameWin(req,res) {
   try {
+  
     // and rest update with status = 2
     const payload = req.body;   
+    
+    // checking if any of the key is missing
+    if(!payload?.game || !payload?.join_bet || !payload?.game_type ||  !payload?.value){
+      throw new Error("The fields 'game', 'join_bet', 'game_type' and 'value' are required.");
+    }
 
-    console.log("payload", payload)
+     // Fetching the period
+     const [k3] = await connection.query(
+      `SELECT * FROM k3 WHERE status = 0 AND game = ${payload?.game} ORDER BY id DESC LIMIT 2`
+    );
+    let k3Info = k3[0];  // give the current bet period
 
     // taking the value
     const value = payload?.value;
 
-    const [a, b, c] = value.split("|");
-
-    
-    console.log("payload", a, b, c)
+    const [a, b, c] = value.split("|"); // spliting the string and assign it to a variable
 
     // Updating the table k3 result
     await connection.execute(
-      `UPDATE result_k3 SET status = 1 WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND AND bet IN (?, ?, ?)`,
+      `UPDATE result_k3 SET status = 1 WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet IN (?, ?, ?)`,
       [0, payload?.game,  payload?.join_bet, payload?.game_type, a, b, c],
     );
 
@@ -2937,6 +2945,26 @@ async function handleGameWin(req,res) {
       WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet NOT IN (?, ?, ?)`,
       [0, payload?.game, payload?.join_bet, payload?.game_type, a, b, c]
     );
+
+    // get all the bet with respect to the current period
+       const [current_period_bet] = await connection.execute(
+        "SELECT * FROM `result_k3` WHERE `stage` = ?",
+        [k3Info?.period],
+      );
+    
+      // filter all the bet with status = 1
+      const all_winning_bet = current_period_bet.filter((bet) => bet?.status === 1);
+
+      // looping through the all_winning_bet array to update the get
+      for (let bet of all_winning_bet){
+        //  get is a reserved keyword in MySQL, so you need to enclose it in backticks (`) to use it as a column name
+        await connection.execute(
+          `UPDATE result_k3 
+          SET \`get\` = ?   
+          WHERE status = ? AND bet = ?`,
+          [bet?.money * 2, 1, bet?.bet]
+        );
+      }
 
     res.status(200).json({ success: true, message: "Game win updated successfully" });
   } catch (err) {
