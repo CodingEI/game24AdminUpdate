@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>k3 | Management</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
@@ -13,16 +14,18 @@
   <link rel="stylesheet" href="/css/pages__parity.css">
   <link rel="stylesheet" href="/css/vantjs.css">
   <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+    integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/admin.css">
-  
+
   <style>
     .box-xs {
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
-      width: 18px!important;
+      width: 18px !important;
       height: 18px;
       border: 1px solid #bbb;
       border-radius: 18px;
@@ -30,6 +33,7 @@
       color: #bbb;
       background-color: #222121;
     }
+
     .active {
       background-color: #007bff !important;
     }
@@ -113,173 +117,175 @@
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
     <%- include('nav') %>
-    <div class="content-wrapper">
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Dashboard V5</h1>
+      <div class="content-wrapper">
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Dashboard V5</h1>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row info-box" id="manage">
-            <div class="col-12 col-sm-6 col-md-3 cursor-pointer block-click" data="1">
-              <div class="info-box mb-3">
-                <span class="info-box-icon elevation-1 bg-primary game">1M</span>
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row info-box" id="manage">
+              <div class="col-12 col-sm-6 col-md-3 cursor-pointer block-click" data="1">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon elevation-1 bg-primary game">1M</span>
 
-                <div class="info-box-content active-game">
-                  <span class="info-box-text">K3 1 min</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-3 cursor-pointer" data="3">
-              <div class="info-box mb-3">
-                <span class="info-box-icon elevation-1 bg-primary game">3M</span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">K3 3 min</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-3 cursor-pointer" data="5">
-              <div class="info-box mb-3">
-                <span class="info-box-icon elevation-1 bg-primary game">5M</span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">K3 5 min</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-3 cursor-pointer" data="10">
-              <div class="info-box">
-                <span class="info-box-icon elevation-1 bg-primary game">10M</span>
-                <div class="info-box-content">
-                  <span class="info-box-text">K3 10 min</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box mb-3">
-                <span class="info-box-icon bg-danger elevation-1">
-                  <i class="fas fa-shopping-cart"></i>
-                </span>
- 
-                <div class="info-box-content">
-                  <span class="info-box-text">Total number</span>
-                  <span totalMoney="0" class="info-box-number" id="total">0</span>
-                </div>
-              </div>
-            </div>
-            <div class="clearfix hidden-md-up"></div>
-
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box mb-3">
-                <span class="info-box-icon elevation-1" style="background-color: #8e44ad;"><i class="fas fa-shopping-cart"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text">2 Matching Numbers</span>
-                  <span totalMoney="0" class="info-box-number"id="2-so-trung">0</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box mb-3">
-                <span class="info-box-icon bg-success elevation-1">
-                  <i class="fas fa-shopping-cart"></i>
-                </span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">3 Matching Numbers</span>
-                  <span totalMoney="0" class="info-box-number" id="3-so-trung">0</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1">
-                  <i class="fas fa-shopping-cart"></i>
-                </span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">Different Numbers</span>
-                  <span totalMoney="0" class="info-box-number" id="khac-so">0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Main row -->
-          <div class="row">
-            <!-- Left col -->
-            <div class="col-md-12">
-              <!-- MAP & BOX PANE -->
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card direct-chat direct-chat-warning">
-                    <div class="card-header">
-                      <h3 class="card-title">Betting Statistics</h3>
-
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                          <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                          <i class="fas fa-times"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="direct-chat-messages" style="min-height: 520px;">
-                        <div class="direct-chat-msg">
-                          <!---->
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-footer"></div>
+                  <div class="info-box-content active-game">
+                    <span class="info-box-text">K3 1 min</span>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card card-primary">
-                    <div class="card-header" style="text-align: center;">
-                      <div data-v-04e3b381="" class="reservation-chunk-sub-num"> Loading... </div>
-                      <div data-v-7d40872f="" class="time" style="font-size: 23px;border-radius: none;">
-                        <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">0</span>
-                        <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">0</span>
-                        <span data-v-7d40872f="" class="">:</span>
-                        <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">4</span>
-                        <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">7</span>
+              <div class="col-12 col-sm-6 col-md-3 cursor-pointer" data="3">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon elevation-1 bg-primary game">3M</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">K3 3 min</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3 cursor-pointer" data="5">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon elevation-1 bg-primary game">5M</span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">K3 5 min</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3 cursor-pointer" data="10">
+                <div class="info-box">
+                  <span class="info-box-icon elevation-1 bg-primary game">10M</span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">K3 10 min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon bg-danger elevation-1">
+                    <i class="fas fa-shopping-cart"></i>
+                  </span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Total number</span>
+                    <span totalMoney="0" class="info-box-number" id="total">0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix hidden-md-up"></div>
+
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon elevation-1" style="background-color: #8e44ad;"><i
+                      class="fas fa-shopping-cart"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">2 Matching Numbers</span>
+                    <span totalMoney="0" class="info-box-number" id="2-so-trung">0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon bg-success elevation-1">
+                    <i class="fas fa-shopping-cart"></i>
+                  </span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">3 Matching Numbers</span>
+                    <span totalMoney="0" class="info-box-number" id="3-so-trung">0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon bg-info elevation-1">
+                    <i class="fas fa-shopping-cart"></i>
+                  </span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Different Numbers</span>
+                    <span totalMoney="0" class="info-box-number" id="khac-so">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Main row -->
+            <div class="row">
+              <!-- Left col -->
+              <div class="col-md-12">
+                <!-- MAP & BOX PANE -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card direct-chat direct-chat-warning">
+                      <div class="card-header">
+                        <h3 class="card-title">Betting Statistics</h3>
+
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div class="card-body" style="padding: 0;">
-                      <div class="form-group">
-                        <div data-v-a9660e98="" class="wrap">
-                          <div data-v-a9660e98="" class="c-tc van-row" style="text-align: center;border-bottom: 1px solid;padding: 6px">
-                            <div data-v-a9660e98="" class="van-col van-col--8">Periods</div>
-                            <div data-v-a9660e98="" class="van-col van-col--5">Result</div>
-                            <div data-v-a9660e98="" class="van-col van-col--5">Big/Small</div>
-                            <div data-v-a9660e98="" class="van-col van-col--5">Even/Odd</div>
+                      <div class="card-body">
+                        <div class="direct-chat-messages" style="min-height: 520px;">
+                          <div class="direct-chat-msg">
+                            <!---->
                           </div>
                         </div>
-                        <div id="list-orders">
-                          <!---->
+                      </div>
+                      <div class="card-footer"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card card-primary">
+                      <div class="card-header" style="text-align: center;">
+                        <div data-v-04e3b381="" class="reservation-chunk-sub-num"> Loading... </div>
+                        <div data-v-7d40872f="" class="time" style="font-size: 23px;border-radius: none;">
+                          <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">0</span>
+                          <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">0</span>
+                          <span data-v-7d40872f="" class="">:</span>
+                          <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">4</span>
+                          <span data-v-7d40872f="" class="time-sub" style="border-radius: 0;">7</span>
+                        </div>
+                      </div>
+                      <div class="card-body" style="padding: 0;">
+                        <div class="form-group">
+                          <div data-v-a9660e98="" class="wrap">
+                            <div data-v-a9660e98="" class="c-tc van-row"
+                              style="text-align: center;border-bottom: 1px solid;padding: 6px">
+                              <div data-v-a9660e98="" class="van-col van-col--8">Periods</div>
+                              <div data-v-a9660e98="" class="van-col van-col--5">Result</div>
+                              <div data-v-a9660e98="" class="van-col van-col--5">Big/Small</div>
+                              <div data-v-a9660e98="" class="van-col van-col--5">Even/Odd</div>
+                            </div>
+                          </div>
+                          <div id="list-orders">
+                            <!---->
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card card-primary">
-                    <div class="card-header">
-                      <h3 class="card-title">Adjust results</h3>
-                    </div>
-                    <!-- <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card card-primary">
+                      <div class="card-header">
+                        <h3 class="card-title">Adjust results</h3>
+                      </div>
+                      <!-- <div class="card-body">
                       <div class="form-group">
                         <b> Enter 5 numbers (e.g., 431). 431 represents 3 dice. The sum will be 4 + 3 + 1 = 8 (8 is Even) (Sum <= 10 will be 'small' and vice versa).</p>
                           <label for="editResult" id="ketQua">Next Result: Random</label>
@@ -289,76 +295,87 @@
                     <div class="card-footer" style="text-align: center;">
                       <button type="submit" class="btn btn-primary start-order">Submit</button>
                     </div> -->
-                    <div class="container mt-4">
-                      <ul class="nav nav-tabs" id="gameTabs">
-                          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#total">Total</a></li>
-                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#two-some">Two Some</a></li>
-                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#three-some">Three Some</a></li>
-                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#different">Different</a></li>
-                      </ul>
-                      
-                      <div class="tab-content">
+                      <div class="container mt-4">
+                        <ul class="nav nav-tabs" id="gameTabs">
+                          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#total">Total</a>
+                          </li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#two-some">Two Some</a>
+                          </li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#three-some">Three
+                              Some</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#different">Different</a>
+                          </li>
+                        </ul>
+
+                        <div class="tab-content">
                           <div class="tab-pane fade show active" id="total">
-                              <div class="card-body">
-                                  <div class="form-group">
-                                      <label for="totalInput">Enter Numbers:</label>
-                                      <input type="text" class="form-control" id="totalInput" placeholder="Enter the result">
-                                  </div>
+                            <div class="card-body">
+                              <div class="form-group">
+                                <div>
+                                  <p>b ---> big || s ---> small || c ---> odd || l ---> even</p>
+                                  <p>In the input box the input like "b|c|4" or "b|l|7", "s|c|9"</p>
+                                </div>
+                                <label for="totalInput">Enter Numbers:</label>
+                                <input type="text" class="form-control" id="totalInput" placeholder="Enter the result">
                               </div>
-                              <div class="card-footer text-center">
-                                  <button type="submit" class="btn btn-primary">Submit</button>
-                              </div>
+                            </div>
+                            <div class="card-footer text-center">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                           </div>
-                          
+
                           <div class="tab-pane fade" id="two-some">
-                              <div class="card-body">
-                                  <div class="form-group">
-                                      <label for="twoSomeInput">Enter Numbers:</label>
-                                      <input type="text" class="form-control" id="twoSomeInput" placeholder="Enter the result">
-                                  </div>
+                            <div class="card-body">
+                              <div class="form-group">
+                                <label for="twoSomeInput">Enter Numbers:</label>
+                                <input type="text" class="form-control" id="twoSomeInput"
+                                  placeholder="Enter the result">
                               </div>
-                              <div class="card-footer text-center">
-                                  <button type="submit" class="btn btn-primary">Submit</button>
-                              </div>
+                            </div>
+                            <div class="card-footer text-center">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                           </div>
-                          
+
                           <div class="tab-pane fade" id="three-some">
-                              <div class="card-body">
-                                  <div class="form-group">
-                                      <label for="threeSomeInput">Enter Numbers:</label>
-                                      <input type="text" class="form-control" id="threeSomeInput" placeholder="Enter the result">
-                                  </div>
+                            <div class="card-body">
+                              <div class="form-group">
+                                <label for="threeSomeInput">Enter Numbers:</label>
+                                <input type="text" class="form-control" id="threeSomeInput"
+                                  placeholder="Enter the result">
                               </div>
-                              <div class="card-footer text-center">
-                                  <button type="submit" class="btn btn-primary">Submit</button>
-                              </div>
+                            </div>
+                            <div class="card-footer text-center">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                           </div>
-                          
+
                           <div class="tab-pane fade" id="different">
-                              <div class="card-body">
-                                  <div class="form-group">
-                                      <label for="differentInput">Enter Numbers:</label>
-                                      <input type="text" class="form-control" id="differentInput" placeholder="Enter the result">
-                                  </div>
+                            <div class="card-body">
+                              <div class="form-group">
+                                <label for="differentInput">Enter Numbers:</label>
+                                <input type="text" class="form-control" id="differentInput"
+                                  placeholder="Enter the result">
                               </div>
-                              <div class="card-footer text-center">
-                                  <button type="submit" class="btn btn-primary">Submit</button>
-                              </div>
+                            </div>
+                            <div class="card-footer text-center">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                           </div>
+                        </div>
                       </div>
-                  </div>
-                  
+
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
-    <a id="back-to-tops" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
-      <i class="fas fa-chevron-up"></i>
-    </a> 
+        </section>
+      </div>
+      <a id="back-to-tops" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+      </a>
   </div>
   <script src="/plugins/jquery/jquery.min.js"></script>
   <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -369,33 +386,77 @@
   <script src="/plugins/raphael/raphael.min.js"></script>
   <script src="/k3/admin/main.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let tabs = document.querySelectorAll("#gameTabs .nav-link");
+    document.addEventListener("DOMContentLoaded", function () {
+      let tabs = document.querySelectorAll("#gameTabs .nav-link");
+      let contents = document.querySelectorAll(".tab-pane");
 
-        tabs.forEach(tab => {
-            tab.addEventListener("click", function() {
-                // Remove active class from all tabs
-                tabs.forEach(t => t.classList.remove("active"));
+      tabs.forEach(tab => {
+        tab.addEventListener("click", function (event) {
+          event.preventDefault();
 
-                // Add active class to the clicked tab
-                this.classList.add("active");
-            });
+          // Remove active class from all tabs and content
+          tabs.forEach(t => t.classList.remove("active"));
+          contents.forEach(c => c.classList.remove("show", "active"));
+
+          // Add active class to clicked tab
+          this.classList.add("active");
+
+          // Get the target tab content and show it
+          let targetId = this.getAttribute("href");
+          document.querySelector(targetId).classList.add("show", "active");
         });
+      });
     });
-</script>
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector("#total .btn-primary").addEventListener("click", function () {
+        const totalInput = document.getElementById("totalInput").value;
+
+        if (!totalInput) {
+          alert("Please enter a value before submitting.");
+          return;
+        }
+
+        fetch("/api/webapi/admin/handle_game_win", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          // body: JSON.stringify({ result: totalInput })
+          body: JSON.stringify({
+            "game": 1,
+            "join_bet": 1,
+            "game_type": "total",
+            "value": totalInput
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            alert("Response from server: " + JSON.stringify(data));
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            alert("Failed to submit. Please try again.");
+          });
+      });
+    });
+  </script>
+
+
 
   <script>
-    $(".start-order").click(function (e) { 
+    $(".start-order").click(function (e) {
       e.preventDefault();
       let game = $('html').attr('data-change');
       let value = $('#editResult').val().trim();
       let arr = value.split('|');
       for (let i = 0; i < arr.length; i++) {
-          let check = isNumber(arr[i]);
-          if (arr[i] == "" || arr[i].length != 3 || !check) {
-              alert("Please enter the correct format (e.g., 123|456|234).");
-              return false;
-          }
+        let check = isNumber(arr[i]);
+        if (arr[i] == "" || arr[i].length != 3 || !check) {
+          alert("Please enter the correct format (e.g., 123|456|234).");
+          return false;
+        }
       }
       $.ajax({
         type: "POST",
@@ -407,9 +468,9 @@
         dataType: "json",
         success: function (response) {
           Swal.fire(
-              'Good job!',
-              `${response.message}`,
-              'success'
+            'Good job!',
+            `${response.message}`,
+            'success'
           );
           $('#ketQua').text(`Next Result: ${value}`);
         }

@@ -2914,10 +2914,15 @@ async function handleGameWin(req,res) {
     // and rest update with status = 2
     const payload = req.body;   
 
+    console.log("payload", payload)
+
     // taking the value
     const value = payload?.value;
 
     const [a, b, c] = value.split("|");
+
+    
+    console.log("payload", a, b, c)
 
     // Updating the table k3 result
     await connection.execute(
