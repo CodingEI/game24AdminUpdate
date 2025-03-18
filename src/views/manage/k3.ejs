@@ -279,7 +279,7 @@
                     <div class="card-header">
                       <h3 class="card-title">Adjust results</h3>
                     </div>
-                    <div class="card-body">
+                    <!-- <div class="card-body">
                       <div class="form-group">
                         <b> Enter 5 numbers (e.g., 431). 431 represents 3 dice. The sum will be 4 + 3 + 1 = 8 (8 is Even) (Sum <= 10 will be 'small' and vice versa).</p>
                           <label for="editResult" id="ketQua">Next Result: Random</label>
@@ -288,7 +288,66 @@
                     </div>
                     <div class="card-footer" style="text-align: center;">
                       <button type="submit" class="btn btn-primary start-order">Submit</button>
-                    </div>
+                    </div> -->
+                    <div class="container mt-4">
+                      <ul class="nav nav-tabs" id="gameTabs">
+                          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#total">Total</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#two-some">Two Some</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#three-some">Three Some</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#different">Different</a></li>
+                      </ul>
+                      
+                      <div class="tab-content">
+                          <div class="tab-pane fade show active" id="total">
+                              <div class="card-body">
+                                  <div class="form-group">
+                                      <label for="totalInput">Enter Numbers:</label>
+                                      <input type="text" class="form-control" id="totalInput" placeholder="Enter the result">
+                                  </div>
+                              </div>
+                              <div class="card-footer text-center">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                          </div>
+                          
+                          <div class="tab-pane fade" id="two-some">
+                              <div class="card-body">
+                                  <div class="form-group">
+                                      <label for="twoSomeInput">Enter Numbers:</label>
+                                      <input type="text" class="form-control" id="twoSomeInput" placeholder="Enter the result">
+                                  </div>
+                              </div>
+                              <div class="card-footer text-center">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                          </div>
+                          
+                          <div class="tab-pane fade" id="three-some">
+                              <div class="card-body">
+                                  <div class="form-group">
+                                      <label for="threeSomeInput">Enter Numbers:</label>
+                                      <input type="text" class="form-control" id="threeSomeInput" placeholder="Enter the result">
+                                  </div>
+                              </div>
+                              <div class="card-footer text-center">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                          </div>
+                          
+                          <div class="tab-pane fade" id="different">
+                              <div class="card-body">
+                                  <div class="form-group">
+                                      <label for="differentInput">Enter Numbers:</label>
+                                      <input type="text" class="form-control" id="differentInput" placeholder="Enter the result">
+                                  </div>
+                              </div>
+                              <div class="card-footer text-center">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
                   </div>
                 </div>
               </div>
@@ -309,6 +368,22 @@
   <script src="/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
   <script src="/plugins/raphael/raphael.min.js"></script>
   <script src="/k3/admin/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let tabs = document.querySelectorAll("#gameTabs .nav-link");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", function() {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove("active"));
+
+                // Add active class to the clicked tab
+                this.classList.add("active");
+            });
+        });
+    });
+</script>
+
   <script>
     $(".start-order").click(function (e) { 
       e.preventDefault();
