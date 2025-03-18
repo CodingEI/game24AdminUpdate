@@ -2925,25 +2925,40 @@ async function handleGameWin(req,res) {
      const [k3] = await connection.query(
       `SELECT * FROM k3 WHERE status = 0 AND game = ${payload?.game} ORDER BY id DESC LIMIT 2`
     );
+
     let k3Info = k3[0];  // give the current bet period
 
     // taking the value
     const value = payload?.value;
 
-    const [a, b, c] = value.split("|"); // spliting the string and assign it to a variable
+    let value_arr;
+    
+    // checking if the game_type is within this then only spliting the value
+    if (["total", "three-same", "unlike", "two-same"].includes(payload?.game_type)) {
+      value_arr = value.split("|");
+      console.log("Split result for game_type", payload?.game_type, ":", value_arr);
+  }
+
+  // checking whether the split value sucessfully store in the array or not
+  if (value_arr.length === 0) {
+    throw new Error("Invalid or empty bet values.");
+  }
+
+  // Generating dynamic placeholders based on value_arr length
+    const placeholders = value_arr.map(() => '?').join(',');
 
     // Updating the table k3 result
     await connection.execute(
-      `UPDATE result_k3 SET status = 1 WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet IN (?, ?, ?)`,
-      [0, payload?.game,  payload?.join_bet, payload?.game_type, a, b, c],
+      `UPDATE result_k3 SET status = 1 WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet IN (${placeholders})`,
+      [0, payload?.game,  payload?.join_bet, payload?.game_type, ...value_arr],
     );
 
     // Updating the table k3 result with status 2 to those which admin didn't set to win
     await connection.execute(
       `UPDATE result_k3 
       SET status = 2 
-      WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet NOT IN (?, ?, ?)`,
-      [0, payload?.game, payload?.join_bet, payload?.game_type, a, b, c]
+      WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet NOT IN (${placeholders})`,
+      [0, payload?.game, payload?.join_bet, payload?.game_type, ...value_arr]
     );
 
     // get all the bet with respect to the current period
@@ -2968,7 +2983,7 @@ async function handleGameWin(req,res) {
 
     res.status(200).json({ success: true, message: "Game win updated successfully" });
   } catch (err) {
-    console.error("Error updating user withdrawal data:", err.message);
+    console.error("Error updating user k3_result table:", err.message);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 

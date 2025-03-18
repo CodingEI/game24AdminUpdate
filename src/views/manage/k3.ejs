@@ -299,10 +299,10 @@
                         <ul class="nav nav-tabs" id="gameTabs">
                           <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#total">Total</a>
                           </li>
-                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#two-some">Two Some</a>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#two-some">Two Same</a>
                           </li>
                           <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#three-some">Three
-                              Some</a></li>
+                              Same</a></li>
                           <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#different">Different</a>
                           </li>
                         </ul>
@@ -328,7 +328,7 @@
                             <div class="card-body">
                               <div class="form-group">
                                 <div>
-                                  <p>In the input box the input like "3|33 , 5|3"</p>
+                                  <p>In the input box the input like "11@|1#@"</p>
                                 </div>
                                 <label for="twoSomeInput">Enter Numbers:</label>
                                 <input type="text" class="form-control" id="twoSomeInput"
@@ -343,7 +343,7 @@
                           <div class="tab-pane fade" id="three-some">
                             <div class="card-body">
                               <div class="form-group">
-                                <p>In the input box the input like "222|win , 444|lose"</p>
+                                <p>In the input box the input like "111@|@3"</p>
                                 <label for="threeSomeInput">Enter Numbers:</label>
                                 <input type="text" class="form-control" id="threeSomeInput"
                                   placeholder="Enter the result">
@@ -357,7 +357,7 @@
                           <div class="tab-pane fade" id="different">
                             <div class="card-body">
                               <div class="form-group">
-                                <p>In the input box the input like "3|win|5 , 5|lose|2"</p>
+                                <p>In the input box the input like "1,2,3@y@|@u@|@y@1,2"</p>
                                 <label for="differentInput">Enter Numbers:</label>
                                 <input type="text" class="form-control" id="differentInput"
                                   placeholder="Enter the result">
@@ -503,7 +503,7 @@
         body: JSON.stringify({
           "game": 1,
           "join_bet": 3,
-          "game_type": "three-some",
+          "game_type": "three-same",
           "value": threeSomeInput
         })
       })
@@ -538,8 +538,8 @@
         // body: JSON.stringify({ result: totalInput })
         body: JSON.stringify({
           "game": 1,
-          "join_bet": 2,
-          "game_type": "different",
+          "join_bet": 4,
+          "game_type": "unlike",
           "value": differentInput
         })
       })
