@@ -2961,8 +2961,8 @@ async function handleGameWin(req,res) {
         await connection.execute(
           `UPDATE result_k3 
           SET \`get\` = ?   
-          WHERE status = ? AND bet = ?`,
-          [bet?.money * 2, 1, bet?.bet]
+          WHERE status = ? AND bet = ? AND stage= ?`,
+          [bet?.money * 2, 1, bet?.bet, k3Info?.period]
         );
       }
 
