@@ -327,6 +327,9 @@
                           <div class="tab-pane fade" id="two-some">
                             <div class="card-body">
                               <div class="form-group">
+                                <div>
+                                  <p>In the input box the input like "3|33 , 5|3"</p>
+                                </div>
                                 <label for="twoSomeInput">Enter Numbers:</label>
                                 <input type="text" class="form-control" id="twoSomeInput"
                                   placeholder="Enter the result">
@@ -442,7 +445,40 @@
       });
     });
   </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#two-some .btn-primary").addEventListener("click", function () {
+      const twoSomeInput = document.getElementById("twoSomeInput").value;
 
+      if (!twoSomeInput) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/handle_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": 2,
+          "game_type": "two-same",
+          "value": twoSomeInput
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
 
 
   <script>
