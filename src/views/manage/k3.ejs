@@ -343,6 +343,7 @@
                           <div class="tab-pane fade" id="three-some">
                             <div class="card-body">
                               <div class="form-group">
+                                <p>In the input box the input like "222|win , 444|lose"</p>
                                 <label for="threeSomeInput">Enter Numbers:</label>
                                 <input type="text" class="form-control" id="threeSomeInput"
                                   placeholder="Enter the result">
@@ -356,6 +357,7 @@
                           <div class="tab-pane fade" id="different">
                             <div class="card-body">
                               <div class="form-group">
+                                <p>In the input box the input like "3|win|5 , 5|lose|2"</p>
                                 <label for="differentInput">Enter Numbers:</label>
                                 <input type="text" class="form-control" id="differentInput"
                                   placeholder="Enter the result">
@@ -411,6 +413,7 @@
       });
     });
   </script>
+  <!-- total -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       document.querySelector("#total .btn-primary").addEventListener("click", function () {
@@ -445,6 +448,7 @@
       });
     });
   </script>
+   <!-- two some -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#two-some .btn-primary").addEventListener("click", function () {
@@ -479,7 +483,77 @@
     });
   });
 </script>
+ <!-- three some -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#three-some .btn-primary").addEventListener("click", function () {
+      const threeSomeInput = document.getElementById("threeSomeInput").value;
 
+      if (!threeSomeInput) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/handle_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": 3,
+          "game_type": "three-some",
+          "value": threeSomeInput
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
+
+<!-- different -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#different .btn-primary").addEventListener("click", function () {
+      const differentInput = document.getElementById("differentInput").value;
+
+      if (!twoSomeInput) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/handle_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": 2,
+          "game_type": "different",
+          "value": differentInput
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
 
   <script>
     $(".start-order").click(function (e) {
