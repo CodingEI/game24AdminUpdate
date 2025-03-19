@@ -877,7 +877,11 @@ router.post(
   adminController.handleGameWin,
 ); // register
 
-
+router.post(  // For 5D game win
+  "/api/webapi/admin/5d_game_win",
+  adminController.middlewareAdminController,
+  adminController.handleGameWin5D,
+); // register
 
 
 

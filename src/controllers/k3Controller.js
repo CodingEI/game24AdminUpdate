@@ -2538,7 +2538,7 @@ const k3Controller = {
   listOrderOld,
   GetMyEmerdList,
   funHandingTwoSame,
-  plusMoney
+  plusMoney,
 };
 
 export default k3Controller;

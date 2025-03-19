@@ -2906,7 +2906,7 @@ async function updateUserWithdrawlData(req, res) {
 }
 
 /**
- * Function to handle the win of k3 and 5D by admin
+ * Function to handle the win of k3 by admin
  * @param {*} req 
  * @param {*} res 
  */
@@ -2989,6 +2989,92 @@ async function handleGameWin(req,res) {
 
 }
 
+/**
+ * Function to handle the win of 5D by admin
+ * @param {Number} game - 1 minutes game or 3 minutes etc
+ * @param {String} join_bet - bet like b , c ,1
+ * @param {String} game_type - game type ['a','b','c','d','e','total']
+ * @param {Number} value - the game which admin wanted to win "b|c|1"
+ */
+async function handleGameWin5D(req,res) {
+  try {
+  
+    // and rest update with status = 2
+    const payload = req.body;   
+    
+    // checking if any of the key is missing
+    if(!payload?.game || !payload?.join_bet || !payload?.game_type ||  !payload?.value){
+      throw new Error("The fields 'game', 'join_bet', 'game_type' and 'value' are required.");
+    }
+
+     // Fetching the period
+     const [k3] = await connection.query(
+      `SELECT * FROM 5d WHERE status = 0 AND game = ${payload?.game} ORDER BY id DESC LIMIT 2`
+    );
+
+    let k3Info = k3[0];  // give the current bet period
+
+    // taking the value
+    const value = payload?.value;
+
+    let value_arr;
+    
+    // checking if the game_type is within this then only spliting the value
+    if (["a", "b", "c", "d", "e", "total"].includes(payload?.game_type)) {
+      value_arr = value.split("|");
+      console.log("Split result for game_type", payload?.game_type, ":", value_arr);
+  }
+
+  // checking whether the split value sucessfully store in the array or not
+  if (value_arr.length === 0) {
+    throw new Error("Invalid or empty bet values.");
+  }
+
+  // Generating dynamic placeholders based on value_arr length
+    const placeholders = value_arr.map(() => '?').join(',');
+
+    // Updating the table k3 result
+    await connection.execute(
+      `UPDATE result_5d SET status = 1 WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet IN (${placeholders})`,
+      [0, payload?.game,  payload?.join_bet, payload?.game_type, ...value_arr],
+    );
+
+    // Updating the table k3 result with status 2 to those which admin didn't set to win
+    await connection.execute(
+      `UPDATE result_5d 
+      SET status = 2 
+      WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet NOT IN (${placeholders})`,
+      [0, payload?.game, payload?.join_bet, payload?.game_type, ...value_arr]
+    );
+
+    // get all the bet with respect to the current period
+       const [current_period_bet] = await connection.execute(
+        "SELECT * FROM `result_5d` WHERE `stage` = ?",
+        [k3Info?.period],
+      );
+    
+      // filter all the bet with status = 1
+      const all_winning_bet = current_period_bet.filter((bet) => bet?.status === 1);
+
+      // looping through the all_winning_bet array to update the get
+      for (let bet of all_winning_bet){
+        //  get is a reserved keyword in MySQL, so you need to enclose it in backticks (`) to use it as a column name
+        await connection.execute(
+          `UPDATE result_5d 
+          SET \`get\` = ?   
+          WHERE status = ? AND bet = ? AND stage= ?`,
+          [bet?.money * 2, 1, bet?.bet, k3Info?.period]
+        );
+      }
+
+    res.status(200).json({ success: true, message: "Game win updated successfully" });
+  } catch (err) {
+    console.error("Error updating user result_5d table:", err.message);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+
+}
+
 const adminController = {
   adminPage,
   adminPage3,
@@ -3053,7 +3139,8 @@ const adminController = {
   getSalary,
   addUserAccountBalance,
   updateQrcodeImage,
-  handleGameWin
+  handleGameWin,
+  handleGameWin5D
 };
 
 export default adminController;
