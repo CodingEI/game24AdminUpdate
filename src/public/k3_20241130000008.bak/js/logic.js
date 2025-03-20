@@ -754,7 +754,7 @@ function showMyBetsData(list_orders) {
           <div data-v-a5ef3154="" class="MyGameRecordList__C-detail-line">Purchase amount <div data-v-a5ef3154="">₹${Number(list_order.money).toFixed(2)}</div>
           </div>
           <div data-v-a5ef3154="" class="MyGameRecordList__C-detail-line">
-            Quantity <div data-v-a5ef3154="">${Number(list_order.amount)}</div>
+            Quantity <div data-v-a5ef3154="">${Number(list_order)}</div>
           </div>
           <div data-v-a5ef3154="" class="MyGameRecordList__C-detail-line">
             Amount after tax <div data-v-a5ef3154="" class="red">₹${Number(list_order.price).toFixed(2)}</div>

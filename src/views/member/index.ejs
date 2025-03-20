@@ -8626,7 +8626,7 @@
                   style="display: none"
                 />
               </div>
-              <div data-v-5bd44e74="" class="userInfo__container-content-uid">
+              <!-- <div data-v-5bd44e74="" class="userInfo__container-content-uid">
                 <span data-v-5bd44e74="">UID</span>
                 <span data-v-5bd44e74="">|</span>
                 <span data-v-5bd44e74="" id="phone_number_display"
@@ -8635,7 +8635,16 @@
                 <svg data-v-5bd44e74="" class="svg-icon icon-copy">
                   <use xlink:href="#icon-copy"></use>
                 </svg>
+              </div> -->
+              <div data-v-5bd44e74="" class="userInfo__container-content-uid">
+                <span data-v-5bd44e74="">UID</span>
+                <span data-v-5bd44e74="">|</span>
+                <span data-v-5bd44e74="" id="phone_number_display">1234567890</span>
+                <svg data-v-5bd44e74="" onclick="copyToClipboard()" class="svg-icon icon-copy">
+                    <use xlink:href="#icon-copy"></use>
+                </svg>
               </div>
+
               <div
                 data-v-5bd44e74=""
                 class="userInfo__container-content-logintime"
@@ -9362,6 +9371,17 @@
             );
           });
         });
+    </script>
+
+    <script>
+      function copyToClipboard() {
+          const phoneNumber = document.getElementById("phone_number_display").innerText.trim();
+          navigator.clipboard.writeText(phoneNumber).then(() => {
+              alert("Copied to clipboard: " + phoneNumber);
+          }).catch(err => {
+              console.error("Error copying text: ", err);
+          });
+      }
     </script>
   </body>
 </html>
