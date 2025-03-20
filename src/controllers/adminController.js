@@ -3001,12 +3001,10 @@ async function handleGameWin5D(req,res) {
   
     // and rest update with status = 2
     const payload = req.body;   
-
-    console.log("payload", payload)
     
     // checking if any of the key is missing
-    if(!payload?.game || !payload?.join_bet || !payload?.game_type ||  !payload?.value){
-      throw new Error("The fields 'game', 'join_bet', 'game_type' and 'value' are required.");
+    if(!payload?.game || !payload?.join_bet  ||  !payload?.value){
+      throw new Error("The fields 'game', 'join_bet' and 'value' are required.");
     }
 
      // Fetching the period
@@ -3022,9 +3020,9 @@ async function handleGameWin5D(req,res) {
     let value_arr;
     
     // checking if the game_type is within this then only spliting the value
-    if (["a", "b", "c", "d", "e", "total"].includes(payload?.game_type)) {
+    if (["a", "b", "c", "d", "e", "total"].includes(payload?.join_bet)) {
       value_arr = value.split("|");
-      console.log("Split result for game_type", payload?.game_type, ":", value_arr);
+      console.log("Split result for join_bet", payload?.join_bet, ":", value_arr);
   }
 
   // checking whether the split value sucessfully store in the array or not
@@ -3045,7 +3043,7 @@ async function handleGameWin5D(req,res) {
     await connection.execute(
       `UPDATE result_5d 
       SET status = 2 
-      WHERE status = ? AND game = ? AND join_bet = ? AND bet NOT IN (${placeholders})`,
+      WHERE status = ? AND game = ? AND join_bet = ?  AND bet NOT IN (${placeholders})`,
       [0, payload?.game, payload?.join_bet, ...value_arr]
     );
 

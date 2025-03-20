@@ -573,7 +573,7 @@
    </script>
 
 
-<!-- aaaaaaaaaaaaaaaa -->
+<!-- join_bet ="a" -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#a .btn-primary").addEventListener("click", function () {
@@ -592,8 +592,7 @@
         // body: JSON.stringify({ result: totalInput })
         body: JSON.stringify({
           "game": 1,
-          "join_bet": a,
-          "game_type": "a",
+          "join_bet": "a",
           "value": inputA
         })
       })
@@ -608,6 +607,184 @@
     });
   });
 </script>
+
+<!-- join_bet ="b" -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#bb .btn-primary").addEventListener("click", function () {
+      const inputB = document.getElementById("inputB").value;
+
+      if (!inputB) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/5d_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": "b",
+          "value": inputB
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
+
+<!-- join_bet ="c" -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#cc .btn-primary").addEventListener("click", function () {
+      const inputC = document.getElementById("inputC").value;
+
+      if (!inputC) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/5d_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": "c",
+          "value": inputC
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
+
+<!-- join_bet ="d" -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#d .btn-primary").addEventListener("click", function () {
+      const inputD = document.getElementById("inputD").value;
+
+      if (!inputD) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/5d_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": "d",
+          "value": inputD
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
+
+<!-- join_bet ="e" -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#e .btn-primary").addEventListener("click", function () {
+      const inputE = document.getElementById("inputE").value;
+
+      if (!inputE) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/5d_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": "e",
+          "value": inputE
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
+
+<!-- join_bet ="total" -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#total .btn-primary").addEventListener("click", function () {
+      const totalInput = document.getElementById("totalInput").value;
+
+      if (!totalInput) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/5d_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": "total",
+          "value": totalInput
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
+
+
+
 </body>
 
 </html>
