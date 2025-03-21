@@ -391,16 +391,110 @@
                     <div class="card-header">
                       <h3 class="card-title">Adjust Results</h3>
                     </div>
-                    <div class="card-body">
-                      <div class="form-group">
-                        <b> Enter 5 numbers (eg 15267) Then A will be 1, B will be 5, Sum will be 1 + 5 + ... + 7 = 21 (21 is odd) (Total <= 22 will be small and vice versa)</p>
-                          <label for="editResult" id="ketQua">next result: Random</label>
-                          <input type="text" class="form-control" id="editResult" value="" placeholder="Enter The Result (eg: 15267|12048|86936)">
+                    <div class="container mt-4">
+                      <ul class="nav nav-tabs" id="gameTabs">
+                          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#a">A</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#bb">B</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#cc">C</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#d">D</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#e">E</a></li>
+                          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#total">Sum</a></li>
+                      </ul>
+                  
+                      <div class="tab-content mt-3">
+                          <!-- Tab A -->
+                          <div class="tab-pane fade show active" id="a">
+                              <div class="card">
+                                  <div class="card-body">
+                                    <p><strong>b</strong> → big | <strong>s</strong> → small | <strong>c</strong> → odd | <strong>l</strong> → even</p>
+                                    <p>Input format: "b|c|4" or "b|l|7", "s|c|9"</p>
+                                      <label for="inputA">Enter Value for A:</label>
+                                      <input type="text" class="form-control" id="inputA" placeholder="Enter a value">
+                                  </div>
+                                  <div class="card-footer text-center">
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                              </div>
+                          </div>
+                  
+                          <!-- Tab B -->
+                          <div class="tab-pane fade" id="bb">
+                              <div class="card">
+                                  <div class="card-body">
+                                    <p><strong>b</strong> → big | <strong>s</strong> → small | <strong>c</strong> → odd | <strong>l</strong> → even</p>
+                                    <p>Input format: "b|c|4" or "b|l|7", "s|c|9"</p>
+                                      <label for="inputB">Enter Value for B:</label>
+                                      <input type="text" class="form-control" id="inputB" placeholder="Enter a value">
+                                  </div>
+                                  <div class="card-footer text-center">
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                              </div>
+                          </div>
+                  
+                          <!-- Tab C -->
+                          <div class="tab-pane fade" id="cc">
+                              <div class="card">
+                                  <div class="card-body">
+                                    <p><strong>b</strong> → big | <strong>s</strong> → small | <strong>c</strong> → odd | <strong>l</strong> → even</p>
+                                    <p>Input format: "b|c|4" or "b|l|7", "s|c|9"</p>
+                                      <label for="inputC">Enter Value for C:</label>
+                                      <input type="text" class="form-control" id="inputC" placeholder="Enter a value">
+                                  </div>
+                                  <div class="card-footer text-center">
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                              </div>
+                          </div>
+                  
+                          <!-- Tab D -->
+                          <div class="tab-pane fade" id="d">
+                              <div class="card">
+                                  <div class="card-body">
+                                    <p><strong>b</strong> → big | <strong>s</strong> → small | <strong>c</strong> → odd | <strong>l</strong> → even</p>
+                                          <p>Input format: "b|c|4" or "b|l|7", "s|c|9"</p>
+                                      <label for="inputD">Enter Value for D:</label>
+                                      <input type="text" class="form-control" id="inputD" placeholder="Enter a value">
+                                  </div>
+                                  <div class="card-footer text-center">
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                              </div>
+                          </div>
+                  
+                          <!-- Tab E -->
+                          <div class="tab-pane fade" id="e">
+                              <div class="card">
+                                  <div class="card-body">
+                                    <p><strong>b</strong> → big | <strong>s</strong> → small | <strong>c</strong> → odd | <strong>l</strong> → even</p>
+                                    <p>Input format: "b|c|4" or "b|l|7", "s|c|9"</p>
+                                      <label for="inputE">Enter Value for E:</label>
+                                      <input type="text" class="form-control" id="inputE" placeholder="Enter a value">
+                                  </div>
+                                  <div class="card-footer text-center">
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                              </div>
+                          </div>
+                  
+                          <!-- Tab Sum -->
+                          <div class="tab-pane fade" id="total">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <div class="form-group">
+                                          <p><strong>b</strong> → big | <strong>s</strong> → small | <strong>c</strong> → odd | <strong>l</strong> → even</p>
+                                          <p>Input format: "b|c|4" or "b|l|7", "s|c|9"</p>
+                                          <label for="totalInput">Enter Numbers:</label>
+                                          <input type="text" class="form-control" id="totalInput" placeholder="Enter the result">
+                                      </div>
+                                  </div>
+                                  <div class="card-footer text-center">
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                    <div class="card-footer" style="text-align: center;">
-                      <button type="submit" class="btn btn-primary start-order">Submit</button>
-                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -453,6 +547,67 @@
       });
     });
   </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+   const tabs = document.querySelectorAll("#gameTabs .nav-link");
+   const tabContents = document.querySelectorAll(".tab-pane");
+ 
+   tabs.forEach((tab) => {
+     tab.addEventListener("click", function (event) {
+       event.preventDefault();
+ 
+       // Get the target content ID
+       const targetId = this.getAttribute("href");
+ 
+       // Remove active classes from all tabs and contents
+       tabs.forEach((t) => t.classList.remove("active"));
+       tabContents.forEach((content) => content.classList.remove("show", "active"));
+ console.log("targetId", targetId)
+       // Activate the clicked tab and its content
+       this.classList.add("active");
+       document.querySelector(targetId).classList.add("show", "active");
+     });
+   });
+ });
+ 
+   </script>
+
+
+<!-- aaaaaaaaaaaaaaaa -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#a .btn-primary").addEventListener("click", function () {
+      const inputA = document.getElementById("inputA").value;
+
+      if (!inputA) {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      fetch("/api/webapi/admin/5d_game_win", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({ result: totalInput })
+        body: JSON.stringify({
+          "game": 1,
+          "join_bet": a,
+          "game_type": "a",
+          "value": inputA
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("Response from server: " + JSON.stringify(data));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Failed to submit. Please try again.");
+        });
+    });
+  });
+</script>
 </body>
 
 </html>

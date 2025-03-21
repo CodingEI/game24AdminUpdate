@@ -391,27 +391,28 @@
   <script src="/plugins/raphael/raphael.min.js"></script>
   <script src="/k3/admin/main.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let tabs = document.querySelectorAll("#gameTabs .nav-link");
-      let contents = document.querySelectorAll(".tab-pane");
+   document.addEventListener("DOMContentLoaded", function () {
+  const tabs = document.querySelectorAll("#gameTabs .nav-link");
+  const tabContents = document.querySelectorAll(".tab-pane");
 
-      tabs.forEach(tab => {
-        tab.addEventListener("click", function (event) {
-          event.preventDefault();
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", function (event) {
+      event.preventDefault();
 
-          // Remove active class from all tabs and content
-          tabs.forEach(t => t.classList.remove("active"));
-          contents.forEach(c => c.classList.remove("show", "active"));
+      // Get the target content ID
+      const targetId = this.getAttribute("href");
 
-          // Add active class to clicked tab
-          this.classList.add("active");
+      // Remove active classes from all tabs and contents
+      tabs.forEach((t) => t.classList.remove("active"));
+      tabContents.forEach((content) => content.classList.remove("show", "active"));
 
-          // Get the target tab content and show it
-          let targetId = this.getAttribute("href");
-          document.querySelector(targetId).classList.add("show", "active");
-        });
-      });
+      // Activate the clicked tab and its content
+      this.classList.add("active");
+      document.querySelector(targetId).classList.add("show", "active");
     });
+  });
+});
+
   </script>
   <!-- total -->
   <script>

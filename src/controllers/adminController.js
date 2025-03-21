@@ -3001,6 +3001,8 @@ async function handleGameWin5D(req,res) {
   
     // and rest update with status = 2
     const payload = req.body;   
+
+    console.log("payload", payload)
     
     // checking if any of the key is missing
     if(!payload?.game || !payload?.join_bet || !payload?.game_type ||  !payload?.value){
@@ -3035,16 +3037,16 @@ async function handleGameWin5D(req,res) {
 
     // Updating the table k3 result
     await connection.execute(
-      `UPDATE result_5d SET status = 1 WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet IN (${placeholders})`,
-      [0, payload?.game,  payload?.join_bet, payload?.game_type, ...value_arr],
+      `UPDATE result_5d SET status = 1 WHERE status = ? AND game = ? AND join_bet = ? AND bet IN (${placeholders})`,
+      [0, payload?.game,  payload?.join_bet, ...value_arr],
     );
 
     // Updating the table k3 result with status 2 to those which admin didn't set to win
     await connection.execute(
       `UPDATE result_5d 
       SET status = 2 
-      WHERE status = ? AND game = ? AND join_bet = ? AND typeGame = ? AND bet NOT IN (${placeholders})`,
-      [0, payload?.game, payload?.join_bet, payload?.game_type, ...value_arr]
+      WHERE status = ? AND game = ? AND join_bet = ? AND bet NOT IN (${placeholders})`,
+      [0, payload?.game, payload?.join_bet, ...value_arr]
     );
 
     // get all the bet with respect to the current period
