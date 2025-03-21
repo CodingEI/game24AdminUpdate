@@ -96,6 +96,36 @@
         .dialog__container[data-v-25cf09df] {
             width: 336px
         }
+        .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        width: 80%;
+        max-width: 400px;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 24px;
+        cursor: pointer;
+    }
     </style>
 </head>
 <body style="font-size: 12px;">
@@ -1464,6 +1494,46 @@
                 <div class="van-toast__text">Copy successful</div>
             </div>
         </div>
+
+        <div id="firstLoadModal" class="modal" style="display: none;">
+            <div class="modal-header">Extra First Deposit Bonus</div>
+            <div class="modal-subheader">Each account can only receive rewards once</div>
+            <div class="modal-body">
+                <div class="bonus-item">
+                    <div class="bonus-title">First Deposit 100000 <span class="bonus-amount">+ ৳5,000.00</span></div>
+                    <div class="bonus-description">Deposit 100000 for the first time and you will receive 5000 bonus</div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                        0/100000
+                    </div>
+                    <button class="deposit-btn">Deposit</button>
+                </div>
+                <div class="bonus-item">
+                    <div class="bonus-title">First Deposit 50000 <span class="bonus-amount">+ ৳2,500.00</span></div>
+                    <div class="bonus-description">Deposit 50000 for the first time and you will receive 2500 bonus</div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                        0/50000
+                    </div>
+                    <button class="deposit-btn">Deposit</button>
+                </div>
+                <div class="bonus-item">
+                    <div class="bonus-title">First Deposit 30000 <span class="bonus-amount">+ ৳1,500.00</span></div>
+                    <div class="bonus-description">Deposit 30000 for the first time and you will receive 1500 bonus</div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                        0/30000
+                    </div>
+                    <button class="deposit-btn">Deposit</button>
+                </div>
+            </div>
+            <div class="footer">
+                <button class="activity-btn">Activity</button>
+            </div>
+
+                <button  onclick="closeModal()">Close</button>
+            </div>
+        </div>
       
         <div data-v-25cf09df="" data-v-f5b7f7ac="" class="dialog" id="dialog">
             <div data-v-25cf09df="" class="dialog__container" role="dialog" tabindex="0">
@@ -2549,6 +2619,18 @@ https://www.facebook.com/profile.php?id=61550851620388</font>
   <div id="loader"></div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Show the modal every time the page loads
+        document.getElementById("firstLoadModal").style.display = "flex";
+    });
+
+    function closeModal() {
+        // Close the modal
+        document.getElementById("firstLoadModal").style.display = "none";
+    }
+</script>
+
 <style>
   /* Loader CSS */
   #loader-overlay {
@@ -2582,6 +2664,116 @@ https://www.facebook.com/profile.php?id=61550851620388</font>
           transform: rotate(360deg);
       }
   }
+</style>
+<style>
+    body {
+        font-family: 'Roboto', 'Inter', sans-serif;
+        background: #f8f8f8;
+        margin: 0;
+        padding: 0;
+    }
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 2001;
+        width: 350px;
+        overflow: scroll;
+        flex-direction: column;
+        height: 400px;
+    }
+    .modal-header {
+        background: #FF9A02;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px 10px 0 0;
+        margin-top: 230px;
+    }
+    .modal-subheader {
+        background: #FF9A02;
+        color: #ff5733;
+        text-align: center;
+        padding: 5px;
+        font-size: 12px;
+    }
+    .modal-body {
+        padding: 15px;
+    }
+    .bonus-item {
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+    }
+    .bonus-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .bonus-amount {
+        color: #ff5733;
+        font-weight: bold;
+    }
+    .bonus-description {
+        font-size: 12px;
+        color: #555;
+    }
+    .progress {
+        background: #ddd;
+        height: 16px;
+        border-radius: 16px;
+        position: relative;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: black;
+        font-weight: bold;
+    }
+    .progress-bar {
+        background: #ff5733;
+        width: 0%;
+        height: 100%;
+        border-radius: 16px;
+        position: absolute;
+        left: 0;
+    }
+    .deposit-btn {
+        background: none;
+        color: #ff5733;
+        border: 2px solid #ff5733;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+        margin-top: 10px;
+    }
+    .footer {
+        text-align: center;
+        padding: 10px;
+    }
+    .activity-btn {
+        background: #ff5733;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 </style>
     <script> 
 document.addEventListener("DOMContentLoaded", function () {
