@@ -357,6 +357,8 @@ const getSalaryRecord = async (req, res) => {
  */
 async function getUserNotificationDetails(req,res){
   try {
+      let auth = req.cookies.auth; // Taking the user ID from the token
+
       // Fetch the user from the database
       const [user] = await connection.query(
         "SELECT * FROM users WHERE token = ? AND veri = 1 LIMIT 1",
