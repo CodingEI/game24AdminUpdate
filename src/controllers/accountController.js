@@ -78,6 +78,7 @@ const login = async (req, res) => {
   }
 
   let { dialcode, username, pwd } = req.body;
+  console.log("username---",username)
 
   try {
     const [rows] = await connection.query(
@@ -122,6 +123,13 @@ const login = async (req, res) => {
     await connection.execute(
       "UPDATE `users` SET `token` = ? WHERE `phone` = ? ",
       [md5(accessToken), username],
+    );
+
+    // create a login and logout time in the user_notification table
+    await connection.execute(
+      `INSERT INTO user_notification (phone, login_time, date) 
+      VALUES (?, CURTIME(), CURDATE())`,
+      [username]
     );
     return res.status(200).json({
       message: "Login Successfully!",

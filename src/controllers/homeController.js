@@ -350,6 +350,55 @@ const getSalaryRecord = async (req, res) => {
 };
 
 
+
+
+/***
+ * Function too fetch all the user login time
+ */
+async function getUserNotificationDetails(req,res){
+  try {
+      // Fetch the user from the database
+      const [user] = await connection.query(
+        "SELECT * FROM users WHERE token = ? AND veri = 1 LIMIT 1",
+        [auth]
+      );
+
+      // Check if the user is found and verified
+      if (!user || user.length === 0) {
+        return res.status(404).json({
+          message: "User not found or not verified!",
+          status: false,
+        });
+      }
+      const user_phone = user[0].phone; // Extract the phone number
+
+      // Fetch user notifications
+      const [notifications] = await connection.query(
+        "SELECT * FROM user_notification WHERE phone = ?",
+        [user_phone]
+      );
+  
+      return res.status(200).json({
+        message: "User notifications fetched successfully!",
+        status: true,
+        data: notifications,
+      });
+
+  }catch(error) {
+    console.error("Error fetching user notifications:", error);
+    return res.status(500).json({
+      message: "Internal server error!",
+      status: false,
+      error: error.message,
+    });
+  }
+
+}
+
+
+
+
+
 const fishing = async (req, res) => {
   return res.render("api/fishing.ejs");
 };
@@ -449,6 +498,7 @@ const homeController = {
   rummy,
   sports,
   casino,
+  getUserNotificationDetails
 };
 
 

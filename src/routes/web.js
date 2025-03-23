@@ -813,6 +813,15 @@ const initWebRouter = (app) => {
     middlewareController,
     userController.getTicketHistory,
   );
+/***************************User notification route********************************* */
+router.get(
+  "/api/webapi/user_notification",
+  middlewareController,
+  homeController.getUserNotificationDetails,
+); // getlist
+
+
+
 
 /***********************************************User Withdraw ********************************** */
 router.get(

@@ -122,7 +122,30 @@ const userWithdraw = async (req, res) => {
 };
 
 
+const userNotification = async (req, res) => {
+  try {
+    console.log("calllllllllllllllllllll")
+    
+   // Reset Help Table
+    await connection.execute("DELETE FROM help_table");
+
+    // Insert Sample Data
+    await connection.execute(
+      `INSERT INTO user_withdraw 
+      (id, phone, login_time, logout_time, date) 
+      VALUES 
+      (NULL,"8687687678","18:54:18","16:26:35","2024-06-01")`,
+    );
+
+    res.status(200).json({ message: "User notification table data Inserted" });
+  } catch (error) {
+    console.error("Error resetting User notification  Table:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 CreateWingo();
 Create5D();
 CreateK3();
 userWithdraw();
+userNotification();
