@@ -2195,8 +2195,8 @@ const constructTransactionsQuery = (
       count: `SELECT COUNT(*) AS totalCount FROM minutes_1 WHERE phone = ? AND time >= ?`,
     },
     "Bet Win": {
-      query: `SELECT id_product AS id, get AS money, 'positive' AS type, 'Bet Win' AS name, time FROM minutes_1 WHERE phone = ? AND get > 0 AND time >= ?`,
-      count: `SELECT COUNT(*) AS totalCount FROM minutes_1 WHERE phone = ? AND get > 0 AND time >= ?`,
+      query: `SELECT id_product AS id, \`get\` AS money, 'positive' AS type, 'Bet Win' AS name, time FROM minutes_1 WHERE phone = ? AND \`get\` > 0 AND time >= ?`,
+      count: `SELECT COUNT(*) AS totalCount FROM minutes_1 WHERE phone = ? AND \`get\` > 0 AND time >= ?`,
     },
     Recharge: {
       query: `SELECT id_order AS id, money, 'positive' AS type, 'Recharge' AS name, time FROM recharge WHERE phone = ? AND status = 1 AND time >= ?`,
@@ -2207,8 +2207,8 @@ const constructTransactionsQuery = (
       count: `SELECT COUNT(*) AS totalCount FROM withdraw WHERE phone = ? AND status = 1 AND time >= ?`,
     },
     Commissions: {
-      query: `SELECT commission_id AS id, SUM(money) AS money, 'positive' AS type, 'Commission' AS name, time FROM commissions WHERE phone = ? AND time >= ? GROUP BY time`,
-      count: `SELECT COUNT(*) AS totalCount FROM (SELECT time FROM commissions WHERE phone = ? AND time >= ? GROUP BY time) AS grouped`,
+      query: `SELECT commission_id AS id, SUM(money) AS money, 'positive' AS type, 'Commission' AS name, time FROM commissions WHERE phone = ? AND time >= ? GROUP BY commission_id, time`,
+      count: `SELECT COUNT(*) AS totalCount FROM (SELECT commission_id, time FROM commissions WHERE phone = ? AND time >= ? GROUP BY commission_id, time) AS grouped`,
     },
     "Gift Vouchers": {
       query: `SELECT id_redenvelops AS id, money, 'positive' AS type, 'Red Envelopes' AS name, time FROM redenvelopes_used WHERE phone_used = ? AND time >= ?`,
@@ -2279,6 +2279,9 @@ const constructTransactionsQuery = (
   }
 };
 
+
+
+
 const listTransaction = async (req, res) => {
   let auth = req.cookies.auth;
   if (!auth) {
@@ -2304,7 +2307,7 @@ const listTransaction = async (req, res) => {
 
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
-  const startDate = req.query.startDate;
+  const startDate = req.query.startDate || '1970-01-01'; // Default to a very early date if not provided
   const filterType = req.query.filterType || "All";
   const offset = (page - 1) * limit;
 
