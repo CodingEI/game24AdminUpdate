@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="/tc/css/reset-7514927e.css">
         <link rel="stylesheet" href="/tc/css/page-home-7f8ec58c.css">
         <link rel="stylesheet" href="/tc/css/page-home-17d4ee93.css">
+        <link rel="manifest" href="/manifest.json">
+
     </head>
     <style>
         .lotterySlotItem .lottery h4[data-v-ce53101a] {
@@ -1527,11 +1529,7 @@
                     <button class="deposit-btn">Deposit</button>
                 </div>
             </div>
-            <div class="footer">
-                <button class="activity-btn">Activity</button>
-            </div>
-
-                <button  onclick="closeModal()">Close</button>
+                <button class="close_button"  onclick="closeModal()">Close</button>
             </div>
         </div>
       
@@ -1665,10 +1663,42 @@ https://www.facebook.com/profile.php?id=61550851620388</font>
     </svg>
     <i data-v-2210d9b2="" onclick="removeDesktop(this)" class="van-badge__wrapper van-icon van-icon-close close" style="color: rgb(255, 255, 255);"></i>
     <img data-v-2210d9b2="" class="icon" src="/favicon.png">
-    <div data-v-2210d9b2="" class="text">Add to Desktop</div>
+
+    <div data-v-2210d9b2="" class="text" id="installBtn" >Add to Desktop</div>
 </div>
 </div><container id="my-app-container"></container>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/service-worker.js")
+        .then(() => console.log("Service Worker Registered"))
+        .catch(err => console.log("Service Worker Error", err));
+    }
+  </script>
+  
+  <script>
+    let installPrompt;
+    window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        installPrompt = event;
+        document.getElementById("installBtn").style.display = "block";
+    });
+  
+    document.getElementById("installBtn").addEventListener("click", () => {
+        if (installPrompt) {
+            installPrompt.prompt();
+            installPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === "accepted") {
+                    console.log("User accepted installation");
+                } else {
+                    console.log("User dismissed installation");
+                }
+                installPrompt = null;
+            });
+        }
+    });
+  </script>
+
 <script>
     // Function to move the last item to the beginning of the list
 
@@ -2678,11 +2708,11 @@ https://www.facebook.com/profile.php?id=61550851620388</font>
         left: 50%;
         transform: translate(-50%, -50%);
         background: white;
-        padding: 20px;
+        padding: 0px;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         z-index: 2001;
-        width: 350px;
+        width: 300px;
         overflow: scroll;
         flex-direction: column;
         height: 400px;
@@ -2693,16 +2723,29 @@ https://www.facebook.com/profile.php?id=61550851620388</font>
         font-size: 18px;
         font-weight: bold;
         text-align: center;
-        padding: 15px;
+        padding: 30px 39px;
         border-radius: 10px 10px 0 0;
-        margin-top: 230px;
+        margin-top: 166px;
+    }
+    .close_button{
+        width: 3.12rem;
+    height: 1.06667rem;
+    color: #FF9A02;
+    font-size: 0.42667rem;
+    text-align: center;
+    border-radius: 9rem;
+    border: 0.01333rem solid #FF9A02;
+    background: transparent;
+    position: fixed;
+    background: white;
+    top: 127%;
     }
     .modal-subheader {
-        background: #FF9A02;
-        color: #ff5733;
-        text-align: center;
-        padding: 5px;
-        font-size: 12px;
+        background: #de9019;
+    color: #2c2a2a;
+    text-align: center;
+    padding: 5px 30px;
+    font-size: 12px;
     }
     .modal-body {
         padding: 15px;

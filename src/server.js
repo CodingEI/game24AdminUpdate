@@ -12,6 +12,8 @@ import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+app.use(express.static('src/public'));
+
 
 const port = process.env.PORT || 3000;
 
@@ -34,6 +36,19 @@ socketIoController.sendMessageAdmin(io);
 // app.all('*', (req, res) => {
 //     return res.render("404.ejs");
 // });
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/src/service-worker.js')
+      .then((registration) => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch((error) => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
+}
 
 server.listen(port, () => {
   console.log(`Connected success http://localhost:${port}`);

@@ -3558,27 +3558,52 @@
         }, 1000);
       };
 
+      // $("button").click(function (e) {
+      //   e.preventDefault();
+      //   let value = $("input").val().trim();
+      //   $(this).addClass("block-click");
+      //   let iej = $(this);
+      //   if (value) {
+      //     $.ajax({
+      //       type: "POST",
+      //       url: "/api/webapi/use/redenvelope",
+      //       data: {
+      //         code: value,
+      //       },
+      //       dataType: "json",
+      //       success: function (response) {
+      //         alertMessage(response.message, iej);
+      //       },
+      //     });
+      //   } else {
+      //     alertMessage("Please enter the gift code", iej);
+      //   }
+      // });
+
+
       $("button").click(function (e) {
-        e.preventDefault();
-        let value = $("input").val().trim();
-        $(this).addClass("block-click");
-        let iej = $(this);
-        if (value) {
-          $.ajax({
+    e.preventDefault();
+    let value = $("input").val().trim();
+    $(this).addClass("block-click");
+    let iej = $(this);
+    
+    if (value) {
+        $.ajax({
             type: "POST",
             url: "/api/webapi/use/redenvelope",
-            data: {
-              code: value,
-            },
+            data: { code: value },
             dataType: "json",
             success: function (response) {
-              alertMessage(response.message, iej);
-            },
-          });
-        } else {
-          alertMessage("Please enter the gift code", iej);
-        }
-      });
+                alertMessage(response.message, iej);
+                setTimeout(function () {
+                    window.location.replace("/mian"); // Full refresh and redirect
+                }, 2000); // Delay to show message before reload
+            }
+        });
+    } else {
+        alertMessage("Please enter the gift code", iej);
+    }
+});
 
       function formateT(params) {
         let result = params < 10 ? "0" + params : params;
