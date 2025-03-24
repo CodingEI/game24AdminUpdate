@@ -1663,6 +1663,7 @@
         </div>
       </div>
       <div data-v-004096dd="" data-v-f9e66ad4="" class="infiniteScroll" id="refreshb005a5cc3c3941cbb5eb9db68e178f7c">
+        <div id="notifications-list" class="sysMessage__container"></div>
 
         <!-- <div data-v-f9e66ad4="" class="sysMessage__container-msgWrapper__item">
           <div data-v-f9e66ad4="" class="sysMessage__container-msgWrapper__item-title">
@@ -1706,19 +1707,22 @@
                       return response.json();
                   })
                   .then(data => {
-                      if (data.success && data.data.length > 0) {
+                    console.log("data.data", data)
+                      if (data.status && data.data.length > 0) {
+                        console.log("data.data", data)
                           renderNotifications(data.data);
                       } else {
                           document.getElementById('notifications-list').innerHTML = '<p>No notifications found.</p>';
                       }
                   })
                   .catch(error => {
-                      console.error('Error fetching notifications:', error);
-                      document.getElementById('notifications-list').innerHTML = '<p>Error loading notifications. Please try again later.</p>';
+                     
+                      // document.getElementById('notifications-list').innerHTML = '<p>Error loading notifications. Please try again later.</p>';
                   });
   
               function renderNotifications(notifications) {
                   let html = '';
+                  console.log("notifications", notifications)
                   
                   notifications.forEach(notification => {
                       html += `
@@ -1774,4 +1778,9 @@
   </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+  .notifications-list{
+    width: 100Vw;
+  }
+</style>
 </html>
