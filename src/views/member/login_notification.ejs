@@ -1745,10 +1745,11 @@
                                   </svg>
                               </div>
                               <div class="sysMessage__container-msgWrapper__item-time">
-                                  ${notification.timestamp}
+                             
+                             Login date -    ${new Date(notification.date).toISOString().slice(8,10) + '/' + new Date('2025-03-24T18:30:00.000Z').toISOString().slice(5,7) + '/' + new Date('2025-03-24T18:30:00.000Z').toISOString().slice(0,4)}
                               </div>
                               <div class="sysMessage__container-msgWrapper__item-content">
-                                  Your account is logged in ${notification.timestamp}
+                                  Your account is logged in ${notification.login_time}
                               </div>
                           </div>
                       `;
@@ -1781,6 +1782,37 @@
 <style>
   .notifications-list{
     width: 100Vw;
+  }
+  .sysMessage__container{
+    display: flex
+;
+    flex-direction: column;
+    gap: 10px
+  }
+  .sysMessage__container-msgWrapper__item{
+    background: #e3dede;
+    padding: 10px;
+    border-radius: 10px
+    
+  }
+  .sysMessage__container-msgWrapper__item-title svg{
+    height: 40px;
+    width: 40px;
+  }
+  .sysMessage__container-msgWrapper__item-title{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .sysMessage__container-msgWrapper__item-title span{
+margin-top: 10px;
+font-size: 0.5rem;
+color: black;
+font-weight: bold;
+  }
+  .sysMessage__container-msgWrapper__item-content,  .sysMessage__container-msgWrapper__item-time{
+    font-size: 0.4rem;
+    font-weight: 600;
   }
 </style>
 </html>
