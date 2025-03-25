@@ -1516,6 +1516,9 @@ const register = async (req, res) => {
     });
   }
 
+  console.log("wow",username, password, invitecode);
+  
+
   try {
     const [check_u] = await connection.query(
       "SELECT * FROM users WHERE phone = ? ",
@@ -1528,22 +1531,24 @@ const register = async (req, res) => {
       });
     } else {
       const sql = `INSERT INTO users SET 
-            id_user = ?,
-            phone = ?,
-            name_user = ?,
-            password = ?,
-            money = ?,
-            level = ?,
-            code = ?,
-            invite = ?,
-            veri = ?,
-            ip_address = ?,
-            status = ?,
-            time = ?`;
+      id_user = ?,
+      phone = ?,
+      name_user = ?,
+      full_name = ?, 
+      password = ?,
+      money = ?,
+      level = ?,
+      code = ?,
+      invite = ?,
+      veri = ?,
+      ip_address = ?,
+      status = ?,
+      time = ?`;
       await connection.execute(sql, [
         id_user,
         username,
         name_user,
+        "Default Full Name", // Provide a value for full_name
         md5(password),
         0,
         2,

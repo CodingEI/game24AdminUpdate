@@ -244,74 +244,74 @@ const getUserLevels = (rows, userCode, maxLevel = 10) => {
 const userStats = async (startTime, endTime, phone = "") => {
   const [rows] = await connection.query(
     `
-      SELECT
-          u.phone,
-          u.invite,
-          u.code,
-          u.time,
-          u.id_user,
-          COALESCE(r.total_deposit_amount, 0) AS total_deposit_amount,
-          COALESCE(r.total_deposit_number, 0) AS total_deposit_number,
-          COALESCE(m.total_bets, 0) AS total_bets,
-          COALESCE(m.total_bet_amount, 0) AS total_bet_amount,
-          COALESCE(c.total_commission, 0) AS total_commission
-      FROM
-          users u
-      LEFT JOIN
-          (
-              SELECT
-                  phone,
-                  SUM(CASE WHEN status = 1 THEN COALESCE(money, 0) ELSE 0 END) AS total_deposit_amount,
-                  COUNT(CASE WHEN status = 1 THEN phone ELSE NULL END) AS total_deposit_number
-              FROM
-                  recharge
-              WHERE
-                  time > ? AND time < ?
-              GROUP BY
-                  phone
-          ) r ON u.phone = r.phone
-      LEFT JOIN
-          (
-              SELECT 
-                  phone,
-                  COALESCE(SUM(total_bet_amount), 0) AS total_bet_amount,
-                  COALESCE(SUM(total_bets), 0) AS total_bets
-              FROM (
-                  SELECT 
-                      phone,
-                      SUM(money + fee) AS total_bet_amount,
-                      COUNT(*) AS total_bets
-                  FROM minutes_1
-                  WHERE time >= ? AND time <= ?
-                  GROUP BY phone
-                  UNION ALL
-                  SELECT 
-                      phone,
-                      SUM(money + fee) AS total_bet_amount,
-                      COUNT(*) AS total_bets
-                  FROM trx_wingo_bets
-                  WHERE time >= ? AND time <= ?
-                  GROUP BY phone
-              ) AS combined
-              GROUP BY phone
-          ) m ON u.phone = m.phone
-      LEFT JOIN
-          (
-              SELECT
-                  from_user_phone AS phone,
-                  SUM(money) AS total_commission
-              FROM
-                  commissions
-              WHERE
-                  time > ? AND time <= ? AND phone = ?
-              GROUP BY
-                  from_user_phone
-          ) c ON u.phone = c.phone
-      GROUP BY
-          u.phone
-      ORDER BY
-          u.time DESC;
-      `,
+        SELECT
+            u.phone,
+            u.invite,
+            u.code,
+            u.time,
+            u.id_user,
+            COALESCE(r.total_deposit_amount, 0) AS total_deposit_amount,
+            COALESCE(r.total_deposit_number, 0) AS total_deposit_number,
+            COALESCE(m.total_bets, 0) AS total_bets,
+            COALESCE(m.total_bet_amount, 0) AS total_bet_amount,
+            COALESCE(c.total_commission, 0) AS total_commission
+        FROM
+            users u
+        LEFT JOIN
+            (
+                SELECT
+                    phone,
+                    SUM(CASE WHEN status = 1 THEN COALESCE(money, 0) ELSE 0 END) AS total_deposit_amount,
+                    COUNT(CASE WHEN status = 1 THEN phone ELSE NULL END) AS total_deposit_number
+                FROM
+                    recharge
+                WHERE
+                    time > ? AND time < ?
+                GROUP BY
+                    phone
+            ) r ON u.phone = r.phone
+        LEFT JOIN
+            (
+                SELECT 
+                    phone,
+                    COALESCE(SUM(total_bet_amount), 0) AS total_bet_amount,
+                    COALESCE(SUM(total_bets), 0) AS total_bets
+                FROM (
+                    SELECT 
+                        phone,
+                        SUM(money + fee) AS total_bet_amount,
+                        COUNT(*) AS total_bets
+                    FROM minutes_1
+                    WHERE time >= ? AND time <= ?
+                    GROUP BY phone
+                    UNION ALL
+                    SELECT 
+                        phone,
+                        SUM(money + fee) AS total_bet_amount,
+                        COUNT(*) AS total_bets
+                    FROM trx_wingo_bets
+                    WHERE time >= ? AND time <= ?
+                    GROUP BY phone
+                ) AS combined
+                GROUP BY phone
+            ) m ON u.phone = m.phone
+        LEFT JOIN
+            (
+                SELECT
+                    from_user_phone AS phone,
+                    SUM(money) AS total_commission
+                FROM
+                    commissions
+                WHERE
+                    time > ? AND time <= ? AND phone = ?
+                GROUP BY
+                    from_user_phone
+            ) c ON u.phone = c.phone
+        GROUP BY
+            u.phone, u.invite, u.code, u.time, u.id_user
+        ORDER BY
+            u.time DESC;
+    `,
     [
       startTime,
       endTime,
@@ -515,22 +515,25 @@ const subordinatesDataByTimeAPI = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
     const userStatsData = await userStats(startDate, endDate, user.phone);
+    // console.log("userStatsData", userStatsData[0])
     // console.time('getUserLevels'); // Start the timer
     const { usersByLevels = [] } = getUserLevels(userStatsData, user.code);
     // console.timeEnd('getUserLevels'); //
+    // console.log("usersByLevels", usersByLevels[0])
     // const filteredUsers = usersByLevels.filter(user => user.time >= startDate && user.id_user.includes(searchFromUid) && (levelFilter !== "All" ? user.user_level === +levelFilter : true));
     const filteredUsers = usersByLevels.filter(
       (user) =>
         user.id_user.includes(searchFromUid) &&
         (levelFilter !== "All" ? user.user_level === +levelFilter : true),
     );
+    // console.log("filteredUsers", filteredUsers[0])
     const usersFilterByPositiveData = filteredUsers.filter(
       (user) =>
-        user.total_deposit_number > 0 ||
-        user.total_deposit_amount > 0 ||
-        user.total_bets > 0,
+        user.total_deposit_number >= 0 ||
+        user.total_deposit_amount >= 0 ||
+        user.total_bets >= 0,
     );
-
+console.log("usersFilterByPositiveData", usersFilterByPositiveData)
     const subordinatesRechargeQuantity = filteredUsers.reduce(
       (acc, curr) => acc + curr.total_deposit_number,
       0,
